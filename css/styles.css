@@ -1,14 +1,87 @@
-html {
-    box-sizing: border-box;
-}
-*, *:before, *:after {
-    box-sizing: inherit;
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 header {
-    border: .5rem solid blue;
+  border: 0.2em dotted blue;
+  align-items: center;
+}
+
+nav {
+  border: 0.2em dotted red;
+  width: 100%;
+  margin: 1em;
+}
+
+nav ul {
+  border: 0.1em dotted grey;
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  font-size: 1.2em;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li {
+  border: 0.1em dotted aquamarine;
+  margin: 0;
+  padding: 0.3em;
 }
 
 footer {
-    border: .5rem solid red;
+  border: none;
+}
+
+@keyframes spin {
+  from {
+    transform: rotateZ(0deg);
+  }
+
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
+.loading {
+  animation: spin 0.7s linear infinite;
+  font-size: 10rem;
+  z-index: 10;
+  display: none;
+}
+
+h1,
+.breeds {
+  padding: 0.4rem;
+}
+
+.breeds {
+  font-size: 1rem;
+  height: 1.5rem;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.wrapper {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dogs {
+  width: 600px;
+  border: 0.1rem black solid;
+  display: none;
+  margin: 0.2em;
+}
+
+.active {
+  display: block;
 }
