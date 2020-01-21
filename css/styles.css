@@ -8,18 +8,16 @@
 }
 
 header {
-  border: 0.2em dotted blue;
   align-items: center;
 }
 
 nav {
-  border: 0.2em dotted red;
+  border: 0.05em dotted red;
   width: 100%;
   margin: 1em;
 }
 
 nav ul {
-  border: 0.1em dotted grey;
   display: flex;
   justify-content: space-around;
   list-style: none;
@@ -29,7 +27,6 @@ nav ul {
 }
 
 nav ul li {
-  border: 0.1em dotted aquamarine;
   margin: 0;
   padding: 0.3em;
 }
