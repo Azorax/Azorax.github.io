@@ -84,7 +84,36 @@ h1,
 }
 
 .game {
-  border: black dotted 0.1em;
+  border: black solid 0.1em;
   width: 60em;
-  height: 30rem;
+  height: 30em;
+  background-image: url('../images/molegame/background.png');
+  background-size: cover;
+  padding: 0;
+}
+
+.background {
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+.rowgame {
+  border: black 0.1rem dotted;
+  display: flex;
+  justify-content: space-around;
+  height: 12em;
+  width: 56em;
+  padding: 1.5em;
+  margin: 2em;
+}
+
+.hole {
+  background-color: black;
+  list-style: none;
+  border: rgb(255, 214, 214) 0.025em solid;
+  padding: 0;
+  width: 9em;
+  height: 9em;
+  border-radius: 50%;
 }
