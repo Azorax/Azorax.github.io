@@ -1,7 +1,6 @@
 const allHoles = Array.from(document.querySelectorAll('.hole'));
-const chooseRandomHole = array => array[0 /* Math.floor(Math.random() * 6) */];
 
-const activateMole = chooseRandomHole(allHoles);
+/* Code for mole timeout and animation */
 const hungryMole = mole => mole.querySelector('#hungry').classList.add('show');
 const fedMole = mole => {
   mole.querySelector('#hungry').classList.remove('show');
@@ -33,15 +32,38 @@ const feed = mole => {
   leavingMole(mole);
 };
 
+var starve;
+
 const moleStarveCycle = mole => {
   hungryMole(mole);
-  let starve = setTimeout(noFeed, 1000, mole);
+  starve = setTimeout(noFeed, 1000, mole);
 };
 
 const moleFeedCycle = mole => {
   clearTimeout(starve);
+  feed(mole);
 };
 
-moleStarveCycle(activateMole);
+/* Choose random holes to spawn a mole */
 
-moleFeedCycle(activateMole);
+const chooseRandomHole = array => array[0 /* Math.floor(Math.random() * 6) */];
+
+const activateMole = chooseRandomHole(allHoles);
+
+/* Detect click on 'hungry mole' */
+
+let mole = activateMole;
+
+moleStarveCycle(mole);
+
+let lambdaF = x => moleFeedCycle(mole);
+
+if (mole.querySelector('#hungry').classList.contains('show')) {
+  mole.addEventListener('click', lambdaF);
+  setTimeout(function() {
+    mole.removeEventListener('click', lambdaF);
+  }, 1000);
+}
+
+console.log(mole.querySelector('#sad'));
+// moleStarveCycle(activateMole);
