@@ -82,3 +82,9 @@ h1,
 .active {
   display: block;
 }
+
+.game {
+  border: black dotted 0.1em;
+  width: 60em;
+  height: 30rem;
+}
