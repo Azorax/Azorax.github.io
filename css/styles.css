@@ -131,3 +131,17 @@ h1,
 .show {
   display: block;
 }
+
+.cursor {
+  position: absolute;
+  width: 6em;
+  height: 6em;
+  left: -100px;
+  cursor: none;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.game:hover {
+  cursor: none;
+}

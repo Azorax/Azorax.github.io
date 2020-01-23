@@ -46,7 +46,7 @@ const moleFeedCycle = mole => {
 
 /* Choose random holes to spawn a mole */
 
-const chooseRandomHole = array => array[0 /* Math.floor(Math.random() * 6) */];
+const chooseRandomHole = array => array[Math.floor(Math.random() * 2)];
 
 const activateMole = chooseRandomHole(allHoles);
 
@@ -56,14 +56,27 @@ let mole = activateMole;
 
 moleStarveCycle(mole);
 
-let lambdaF = x => moleFeedCycle(mole);
+const feedCycle = x => moleFeedCycle(mole);
 
 if (mole.querySelector('#hungry').classList.contains('show')) {
-  mole.addEventListener('click', lambdaF);
+  mole.addEventListener('click', feedCycle);
   setTimeout(function() {
-    mole.removeEventListener('click', lambdaF);
+    mole.removeEventListener('click', feedCycle);
   }, 1000);
 }
 
-console.log(mole.querySelector('#sad'));
-// moleStarveCycle(activateMole);
+/* Mouse image change to bird and worm*/
+const background = document.querySelector('.game');
+const birdCursor = document.querySelector('.bird');
+const wormCursor = document.querySelector('.worm');
+const hungryMole = document.querySelector('#hungry');
+
+background.addEventListener('mousemove', e => {
+  birdCursor.style.left = `${e.clientX - 40}px`;
+  birdCursor.style.top = `${e.clientY - 40}px`;
+});
+
+wormCursor.addEventListener('movemove', e => {
+  wormCursor.style.left = `${e.clientX - 40}px`;
+  wormCursor.style.top = `${e.clientY - 40}px`;
+});
