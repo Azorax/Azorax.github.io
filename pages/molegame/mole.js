@@ -1,143 +1,65 @@
+/* Retrieve all holes from document */
+
 const allHoles = Array.from(document.querySelectorAll('.hole'));
 
-/* Code for mole timeout and animation */
-const hungryMole = mole => mole.querySelector('#hungry').classList.add('show');
+/* Code for changing mole src and mole cycle */
+
+function changeToSad(mole) {
+  mole.src = '../../images/molegame/mole-sad.png';
+  mole.alt = 'sad mole';
+  mole.classList.add('wiggle');
+}
+
+function changeToFed(mole) {
+  mole.src = '../../images/molegame/mole-fed.png';
+  mole.alt = 'fed mole';
+  mole.classList.add('wiggle');
+}
+
+function changeToLeaving(mole) {
+  mole.src = '../../images/molegame/mole-leaving.png';
+  mole.alt = 'leaving mole';
+  mole.classList.remove('wiggle');
+  mole.classList.remove('spin');
+  setTimeout(hideMole, 500, mole);
+}
+
+function hideMole(mole) {
+  mole.src = '../../images/molegame/mole-hungry.png';
+  mole.alt = 'hungry mole';
+  mole.classList.remove('show');
+}
+
+const unFedMole = mole => {
+  changeToSad(mole);
+  setTimeout(changeToLeaving, 1000, mole);
+};
+
 const fedMole = mole => {
-  mole.querySelector('#hungry').classList.remove('show');
-  mole.querySelector('#fed').classList.add('show');
-};
-const sadMole = mole => {
-  mole.querySelector('#hungry').classList.remove('show');
-  mole.querySelector('#sad').classList.add('show');
-};
-const leavingMole = mole => {
-  setTimeout(function() {
-    mole.querySelector('#sad').classList.remove('show');
-    mole.querySelector('#fed').classList.remove('show');
-    mole.querySelector('#leaving').classList.add('show');
-    setTimeout(resetMole, 400, mole);
-  }, 1000);
-};
-const resetMole = mole => {
-  mole.querySelector('#leaving').classList.remove('show');
-  mole.querySelector('#hungry').classList.remove('show');
-  mole.classList.remove('.active');
+  changeToFed(mole);
+  setTimeout(changeToLeaving, 1000, mole);
 };
 
-const noFeed = mole => {
-  sadMole(mole);
-  leavingMole(mole);
-};
-
-const feed = mole => {
-  fedMole(mole);
-  leavingMole(mole);
-};
-
-var starve;
-var canBeFed;
-
-const moleStarveCycle = mole => {
-  hungryMole(mole);
-  starve = setTimeout(noFeed, 1500, mole);
-};
-
-const moleFeedCycle = mole => {
-  clearTimeout(starve);
-  points++;
-  console.log(points);
-  feed(mole);
-};
-
-/*
-Points
-*/
-
-var points = 0;
-
-/* Choose random holes to spawn a mole and spawn them periodically */
-const spawn = () => {
-  /* Detect click on 'hungry mole' */
-
-  const mole = chooseRandomHole(allHoles);
-
-  if (!mole.classList.contains('.active')) {
-    mole.classList.add('.active');
-    setTimeout(() => resetMole(mole), 3000);
-    moleStarveCycle(mole);
-
-    const feedCycle = x => moleFeedCycle(mole);
-
-    if (mole.querySelector('#hungry').classList.contains('show')) {
-      canBeFed = mole.addEventListener('click', feedCycle);
-      setTimeout(function() {
-        mole.removeEventListener('click', feedCycle);
-      }, 1400);
-    }
-  }
-};
-
-const spawnInterval = setInterval(spawn, Math.random() * 300 + 500);
+/* Code for choosing Random Hole */
 
 const chooseRandomHole = array => array[Math.floor(Math.random() * 7)];
 
-/* Mouse image change to bird and worm*/
-const background = document.querySelector('.game');
-const birdCursor = document.querySelector('.bird');
-const wormCursor = document.querySelector('.worm');
-const hungryMoles = document.querySelectorAll('#hungry');
+/* Initialisation function */
 
-background.addEventListener('mouseenter', e => {
-  birdCursor.classList.add('show');
+function init() {
+  const spawnMole = () => {
+    const hole = chooseRandomHole(allHoles);
 
-  background.addEventListener('mousemove', e => {
-    birdCursor.style.left = `${e.clientX - 40}px`;
-    birdCursor.style.top = `${e.clientY - 40}px`;
-  });
-});
+    const mole = hole.querySelector('.mole');
 
-background.addEventListener('mouseleave', e => {
-  birdCursor.classList.remove('show');
-});
-
-/* Array.from(hungryMoles).forEach(m =>
-  m.addEventListener('mousemove', e => {
-    if (m.classList.contains('show')) {
-      wormCursor.style.left = `${e.clientX - 40}px`;
-      wormCursor.style.top = `${e.clientY - 40}px`;
-      birdCursor.classList.remove('show');
-      wormCursor.classList.add('show');
-    } else {
-      wormCursor.classList.remove('show');
-      birdCursor.classList.add('show');
+    if (!mole.classList.contains('show')) {
+      mole.classList.add('show'); // mole pops out
+      setTimeout(unFedMole, 1500, mole); // if not fed
+      mole.addEventListener('click', e => fedMole(mole)); // if fed
+      setTimeout(() => hole.classList.remove('.active'), 3000); // reset hole
+      console.log(mole);
     }
-  })
-); */
-
-/*
-If hovering over a hungry show mole then change cursor 
-
-problem: 2 images are shown.
-
-we need to hide the general one when 2nd one shows.
-
-when 2nd one is 'done'
-- starve or feed cycle is procc'd
-- 1. after 1 second
-- 2. after a click happens before that 1 second
-
-Maybe move the z-index depending on which ones are showing?
-
-*/
-
-// fix issue where some aren't going inactive (solved by foced inactive holes every 3 seconds), and some images stack
-// Should load the images one at a time. they are currently stacked and it is producing bugs.
-
-/* 
-fed face -> wiggle the face
-sad face -> tile the face downwards -> user css perspective
-*/
-
-/* 
-
-*/
+  };
+  setInterval(spawnMole, 600);
+}
+init();
