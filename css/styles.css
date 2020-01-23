@@ -153,3 +153,16 @@ h1,
 .show {
   display: block;
 }
+
+@keyframes wiggle {
+  from {
+    transform: rotateZ(-30deg);
+  }
+  to {
+    transform: rotateZ(30deg);
+  }
+}
+
+.wiggle {
+  animation: wiggle 0.2s linear alternate infinite;
+}

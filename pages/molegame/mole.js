@@ -15,11 +15,12 @@ const leavingMole = mole => {
     mole.querySelector('#sad').classList.remove('show');
     mole.querySelector('#fed').classList.remove('show');
     mole.querySelector('#leaving').classList.add('show');
-    setTimeout(resetMole, 500, mole);
-  }, 700);
+    setTimeout(resetMole, 400, mole);
+  }, 1000);
 };
 const resetMole = mole => {
   mole.querySelector('#leaving').classList.remove('show');
+  mole.querySelector('#hungry').classList.remove('show');
   mole.classList.remove('.active');
 };
 
@@ -43,8 +44,16 @@ const moleStarveCycle = mole => {
 
 const moleFeedCycle = mole => {
   clearTimeout(starve);
+  points++;
+  console.log(points);
   feed(mole);
 };
+
+/*
+Points
+*/
+
+var points = 0;
 
 /* Choose random holes to spawn a mole and spawn them periodically */
 const spawn = () => {
@@ -54,6 +63,7 @@ const spawn = () => {
 
   if (!mole.classList.contains('.active')) {
     mole.classList.add('.active');
+    setTimeout(() => resetMole(mole), 3000);
     moleStarveCycle(mole);
 
     const feedCycle = x => moleFeedCycle(mole);
@@ -120,4 +130,14 @@ Maybe move the z-index depending on which ones are showing?
 
 */
 
-// fix issue where some aren't going inactive, and some images stack
+// fix issue where some aren't going inactive (solved by foced inactive holes every 3 seconds), and some images stack
+// Should load the images one at a time. they are currently stacked and it is producing bugs.
+
+/* 
+fed face -> wiggle the face
+sad face -> tile the face downwards -> user css perspective
+*/
+
+/* 
+
+*/
