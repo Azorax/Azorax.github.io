@@ -1,7 +1,3 @@
-/* Retrieve all holes from document */
-
-const allHoles = Array.from(document.querySelectorAll('.hole'));
-
 /* Code for changing mole src and mole cycle */
 
 function changeToSad(mole) {
@@ -13,7 +9,7 @@ function changeToSad(mole) {
 function changeToFed(mole) {
   mole.src = '../../images/molegame/mole-fed.png';
   mole.alt = 'fed mole';
-  mole.classList.add('wiggle');
+  mole.classList.add('spin');
 }
 
 function changeToLeaving(mole) {
@@ -28,21 +24,19 @@ function hideMole(mole) {
   mole.src = '../../images/molegame/mole-hungry.png';
   mole.alt = 'hungry mole';
   mole.classList.remove('show');
+  mole.parentElement.classList.remove('.active');
 }
+/* Retrieve all holes from document */
 
-const unFedMole = mole => {
-  changeToSad(mole);
-  setTimeout(changeToLeaving, 1000, mole);
-};
-
-const fedMole = mole => {
-  changeToFed(mole);
-  setTimeout(changeToLeaving, 1000, mole);
-};
+const allHoles = Array.from(document.querySelectorAll('.hole'));
 
 /* Code for choosing Random Hole */
 
 const chooseRandomHole = array => array[Math.floor(Math.random() * 7)];
+
+// Points Tracker
+
+var points = 0;
 
 /* Initialisation function */
 
@@ -52,14 +46,33 @@ function init() {
 
     const mole = hole.querySelector('.mole');
 
+    const fedMoleCycle = e => fedMole(mole);
+
+    const fedMole = mole => {
+      // Mole is fed
+      points++;
+      mole.removeEventListener('click', fedMoleCycle);
+      clearTimeout(unFedTimer);
+      changeToFed(mole);
+      setTimeout(changeToLeaving, 1000, mole);
+    };
+
+    const unFedMole = mole => {
+      // Mole is not fed
+      mole.removeEventListener('click', fedMoleCycle);
+      changeToSad(mole);
+      setTimeout(changeToLeaving, 1000, mole);
+    };
+
     if (!mole.classList.contains('show')) {
       mole.classList.add('show'); // mole pops out
-      setTimeout(unFedMole, 1500, mole); // if not fed
-      mole.addEventListener('click', e => fedMole(mole)); // if fed
-      setTimeout(() => hole.classList.remove('.active'), 3000); // reset hole
-      console.log(mole);
+
+      var unFedTimer = setTimeout(unFedMole, 1500, mole); // if not fed
+      mole.addEventListener('click', fedMoleCycle); // if fed
     }
   };
-  setInterval(spawnMole, 600);
+
+  setInterval(spawnMole, 600); // spawn a mole ever .6 seconds
 }
+
 init();

@@ -137,18 +137,10 @@ h1,
   pointer-events: none;
   z-index: 50;
 }
-
-.bird {
-  display: none;
-}
-
-.worm {
-  display: none;
-}
-
+/* 
 .game:hover {
-  cursor: none;
-}
+  cursor: block;
+} */
 
 .show {
   display: block;
@@ -156,13 +148,23 @@ h1,
 
 @keyframes wiggle {
   from {
-    transform: rotateZ(-30deg);
+    transform: rotateZ(-15deg);
   }
   to {
-    transform: rotateZ(30deg);
+    transform: rotateZ(15deg);
   }
 }
 
+@keyframes spin {
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
+.spin {
+  animation: spin 0.7s linear;
+}
+
 .wiggle {
-  animation: wiggle 0.2s linear alternate infinite;
+  animation: wiggle 0.1s linear alternate infinite;
 }
