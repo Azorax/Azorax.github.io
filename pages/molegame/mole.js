@@ -4,12 +4,14 @@ function changeToSad(mole) {
   mole.src = '../../images/molegame/mole-sad.png';
   mole.alt = 'sad mole';
   mole.classList.add('wiggle');
+  mole.parentElement.classList.remove('.feed');
 }
 
 function changeToFed(mole) {
   mole.src = '../../images/molegame/mole-fed.png';
   mole.alt = 'fed mole';
   mole.classList.add('spin');
+  mole.parentElement.classList.remove('.feed');
 }
 
 function changeToLeaving(mole) {
@@ -66,6 +68,7 @@ function init() {
 
     if (!mole.classList.contains('show')) {
       mole.classList.add('show'); // mole pops out
+      hole.classList.add('.feed'); // you can feed it
 
       var unFedTimer = setTimeout(unFedMole, 1500, mole); // if not fed
       mole.addEventListener('click', fedMoleCycle); // if fed
@@ -87,6 +90,17 @@ const changeMouse = e => {
   cursor.style.top = `${e.clientY - 40}px`;
 };
 
-const switchBird = ;
+gameBackground.addEventListener('mousemove', changeMouse);
 
-gameBackground.addEventListener('mousemove', e => changeMouse(e));
+allHoles.forEach(hole => {
+  hole.addEventListener('mousemove', e => {
+    if (hole.classList.contains('.feed')) {
+      cursor.src = '../../images/molegame/cursor-worm.png';
+    } else {
+      cursor.src = '../../images/molegame/cursor.png';
+    }
+  });
+  hole.addEventListener('mouseleave', e => {
+    cursor.src = '../../images/molegame/cursor.png';
+  });
+});
