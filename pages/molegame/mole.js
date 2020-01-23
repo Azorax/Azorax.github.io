@@ -53,6 +53,7 @@ function init() {
     const fedMole = mole => {
       // Mole is fed
       points++;
+      console.log(points);
       mole.removeEventListener('click', fedMoleCycle);
       clearTimeout(unFedTimer);
       changeToFed(mole);
