@@ -76,3 +76,17 @@ function init() {
 }
 
 init();
+
+// Cursor handling
+const gameBackground = document.getElementById('background');
+const cursor = document.querySelector('.cursor');
+
+const changeMouse = e => {
+  cursor.classList.add('show');
+  cursor.style.left = `${e.clientX - 40}px`;
+  cursor.style.top = `${e.clientY - 40}px`;
+};
+
+const switchBird = ;
+
+gameBackground.addEventListener('mousemove', e => changeMouse(e));

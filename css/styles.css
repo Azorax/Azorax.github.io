@@ -130,17 +130,17 @@ h1,
 
 .cursor {
   position: absolute;
-  width: 6em;
-  height: 6em;
+  width: 5em;
+  height: 5em;
   left: -100px;
   cursor: none;
   pointer-events: none;
   z-index: 50;
 }
-/* 
+
 .game:hover {
-  cursor: block;
-} */
+  cursor: none;
+}
 
 .show {
   display: block;
